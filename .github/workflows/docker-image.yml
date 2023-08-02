@@ -1,29 +1,28 @@
-name: Docker Image CI
+name: ci
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: master
 
 jobs:
-
-  build:
-
+  login:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Login to DockerHub Registry
-      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      
-    - name: pull image
-      run: docker pull ubuntu && docker tag ubuntu thanhmanci/test/ubuntu
-      
-    - name: push image
-      run: docker push thanhmanci/test/ubuntu
-      
-      
-      
-    
-      
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get Short Commit ID
+        id: commit_id
+        run: echo "::set-output name=short_commit_id::${GITHUB_SHA::7}"
+
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # - name: pull and push
+      #   run: docker pull ubuntu && docker tag ubuntu thanhmanci/test && docker push thanhmanci/test
+
+      - name: Print Short Commit ID
+        run: echo ${{ steps.commit_id.outputs.short_commit_id }}
