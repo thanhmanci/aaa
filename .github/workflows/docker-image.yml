@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Login to DockerHub Registry
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      
+    - name: pull image
+      run: docker pull ubuntu && docker tag ubuntu thanhmanci/test/ubuntu
+      
+    - name: push image
+      run: docker push thanhmanci/test/ubuntu
+      
+      
+      
+    
+      
