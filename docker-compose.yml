@@ -1,0 +1,12 @@
+version: "3.2"
+
+services:
+  imageproxy:
+    image: dpokidov/imagemagick
+    command: sleep infinity
+    environment:
+      - IMGPROXY_MAX_SRC_FILE_SIZE=30000000
+      - IMGPROXY_MAX_SRC_RESOLUTION=10000
+      - IMGPROXY_DOWNLOAD_TIMEOUT=true
+      - IMGPROXY_DEVELOPMENT_ERRORS_MODE=true
+      # http://localhost:8080/JJsF1qFB6GmViZ2sKEpdFiN-QSBBkOI3S8_ChQClIFo/rs:fit:300:0/plain/https://hn.ss.bfcplatform.vn/thanhmanci/customer_products_temp/114-29389.JPG@%.png
